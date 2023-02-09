@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Admin</title>
+</head>
+<body>
+<h1>User-list</h1>
+<table style="width: 1%;" border="1" cellpadding="5">
+    <tr bgcolor="#dcdcdc">
+        <td>ID</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Age</td>
+        <td>Email</td>
+        <td>Role</td>
+        <td>Edit</td>
+        <td>Delete</td>
+    </tr>
+    <th:block th:each="element : ${list}">
+        <tr>
+            <td th:text="${element.getId()}"></td>
+            <td th:text="${element.getFirstName()}"></td>
+            <td th:text="${element.getLastName()}"></td>
+            <td th:text="${element.getAge()}"></td>
+            <td th:text="${element.getEmail()}"></td>
+            <td th:text="${element.getRoles()}"></td>
+            <td><a th:href="@{'admin/edit?id=' + ${element.getId()}}">Edit</a></td>
+            <td><a th:href="@{'admin/delete?id=' + ${element.getId()}}">Delete</a></td>
+        </tr>
+    </th:block>
+    <tr>
+        <td colspan="8"><a href="admin/createUser">Add new User</a></td>
+    </tr>
+</table>
+
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>

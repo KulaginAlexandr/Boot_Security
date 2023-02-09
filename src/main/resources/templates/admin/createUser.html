@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new User</title>
+</head>
+<body>
+<h1>New User</h1>
+<form th:action="@{/admin/save}" method="POST" th:object="${user}">
+    <table>
+        <tr>
+            <input type="hidden" name="id" th:field="*{id} ">
+            <td><label for="name">Name</label></td>
+            <td><input type="text" name="name" id="name" th:field="*{firstName} "></td>
+        </tr>
+        <tr>
+            <td><label for="name">Surname</label></td>
+            <td><input type="text" name="last-name" id="last-name" th:field="*{lastName}"></td>
+        </tr>
+        <tr>
+            <td><label for="age">Age</label></td>
+            <td><input type="number" name="age" id="age" th:field="*{age}"></td>
+        </tr>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input type="email" name="email" id="email" th:field="*{email}"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password</label></td>
+            <td><input type="password" name="password" id="password" th:field="*{password}"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="roles">Roles:</label>
+            </td>
+            <td>
+                <input type="checkbox" name="roles" id="roles"
+                       th:each="role : ${allRoles}"
+                       th:text="${role.name}"
+                       th:value="${role.id}"
+                       th:field="*{roles}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Save"></td>
+        </tr>
+    </table>
+</form>
+<a th:href="@{/admin}">Back to UserList</a>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>

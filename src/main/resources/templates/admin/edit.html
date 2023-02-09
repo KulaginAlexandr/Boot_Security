@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="User_+${user.getId()}"></h1>
+<form th:action="@{/admin/save}" th:method="PATCH" th:object="${user}">
+    <input type="hidden" name="_method" value="PATCH">
+    <table>
+        <tr>
+            <input type="hidden" name="id" th:field="*{id} ">
+            <td><label for="name">Name</label></td>
+            <td><input type="text" name="name" id="name" th:field="*{firstName} "></td>
+        </tr>
+        <tr>
+            <td><label for="name">Surname</label></td>
+            <td><input type="text" name="last-name" id="last-name" th:field="*{lastName}"></td>
+        </tr>
+        <tr>
+            <td><label for="age">Age</label></td>
+            <td><input type="number" name="age" id="age" th:field="*{age}"></td>
+        </tr>
+        <tr>
+            <td><label for="email">Email</label></td>
+            <td><input type="email" name="email" id="email" th:field="*{email}"></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="roles">Roles:</label>
+            </td>
+            <td>
+                <input type="checkbox" name="roles" id="roles"
+                       th:each="role : ${allRoles}"
+                       th:text="${role.name}"
+                       th:value="${role.id}"
+                       th:field="*{roles}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Save"></td>
+        </tr>
+    </table>
+</form>
+<a th:href="@{/admin}">Back to UserList</a>
+<a th:href="@{/logout}">Logout</a>
+</body>
+</html>
