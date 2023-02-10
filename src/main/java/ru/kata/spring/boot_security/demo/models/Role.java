@@ -1,19 +1,24 @@
 package ru.kata.spring.boot_security.demo.models;
 
+import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
-
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
-@Entity
+@Entity(name = "role")
 @Table(name = "role")
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @Column(nullable = false, length = 45)
+    @Column(nullable = false)
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     public Role() {
     }
@@ -22,29 +27,11 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return id.equals(role.id) && name.equals(role.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,7 +44,25 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public String getAuthority() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return id.equals(role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
