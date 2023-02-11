@@ -29,11 +29,9 @@ public class initDefaultUsers {
     private void postConstruct(){
         if (userService.findByEmail("admin@ya.ru").isEmpty()) {
             List<Role> roleList = roleService.getRoleList();
-            User admin = new User("admin", "admin", (byte) 0, "admin@ya.ru", "");
-            userService.saveUser(admin);
-            admin.setPassword("1");
+            User admin = new User("admin", "admin", (byte) 0, "admin@ya.ru", "1");
             admin.addRole(roleList.get(0));
-            userService.updateUser(admin);
+            userService.saveUser(admin);
         }
     }
 }
