@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.models;
 
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;

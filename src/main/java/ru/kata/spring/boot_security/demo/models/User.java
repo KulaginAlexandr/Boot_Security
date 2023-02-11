@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "user")
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = {@UniqueConstraint(columnNames = "email")})
 public class User implements UserDetails {
     @Id
     @Column(name = "id")
@@ -23,15 +23,15 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "Age")
     private byte age;
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "password")
     private String password;
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -159,6 +159,7 @@ public class User implements UserDetails {
                 ", age=" + age +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", roles='" + this.roles + '\'' +
                 '}';
     }
 

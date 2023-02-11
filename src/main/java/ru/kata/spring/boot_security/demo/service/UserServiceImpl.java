@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
     private final RoleDao roleDao;
 
     private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(UserDao userDao, RoleDao roleDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);
     }
 
+    @Transactional
     @Override
     public void updateUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -47,14 +50,14 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserList() {
         return userDao.findAll();
     }
-    @Transactional
-    public List<Role> getRoleList() {
-        return roleDao.findAll();
-    }
+
     @Override
     public User getUserById(long id) {
         return userDao.getOne(id);
     }
 
+    public Optional<User> findByEmail(String login) {
+        return userDao.findByEmail(login);
+    }
 
 }
