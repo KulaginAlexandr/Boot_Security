@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1 th:text="User_+${user.getId()}"></h1>
-<form th:action="@{/admin/save}" th:method="PATCH" th:object="${user}">
+<form th:action="@{/admin/update}" th:method="PATCH" th:object="${user}">
     <input type="hidden" name="_method" value="PATCH">
     <table>
         <tr>
